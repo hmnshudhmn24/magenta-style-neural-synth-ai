@@ -5,7 +5,7 @@ Morph between two sounds by **latent interpolation**, render melodies via **MIDI
 
 > ⚠️ This is a **minimal educational** take on NSynth-style ideas (not the original architecture). It’s compact, hackable, and fun.
 
----
+
 
 ## ✨ Features
 
@@ -15,7 +15,7 @@ Morph between two sounds by **latent interpolation**, render melodies via **MIDI
 - 🌐 **Gradio web app** for interactive blending
 - 🧩 Plain-Python DSP via `librosa` (mel/inversion via Griffin-Lim)
 
----
+
 
 ## 🧰 Install
 
@@ -25,7 +25,7 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
----
+
 
 ## 📂 Data
 
@@ -34,7 +34,7 @@ Good sources: single-note multisamples, short instrument phrases, NSynth subset,
 
 > Tip: Keep files normalized; avoid long silences. More variety improves the learned timbre space.
 
----
+
 
 ## 🚆 Train the model
 
@@ -46,7 +46,7 @@ python -m src.train --data "data/**/*.wav" --out checkpoints --epochs 25 --bs 16
 - Saves `checkpoints/ae_ep*.pt` and `checkpoints/ae_best.pt`  
 - Loss: L1 on normalized log-mels (robust and simple)
 
----
+
 
 ## 🧪 Timbre blending (A → B)
 
@@ -57,7 +57,7 @@ python -m src.blend --ckpt checkpoints/ae_best.pt   --a data/piano_C4.wav   --b 
 - `alpha=0.0` → 100% A; `alpha=1.0` → 100% B  
 - Output is reconstructed audio via mel inversion (Griffin-Lim)
 
----
+
 
 ## 🎼 Render a MIDI with a learned timbre
 
@@ -72,7 +72,7 @@ How it works (simple but effective):
 
 > This is a naive renderer (not a neural decoder conditioned on pitch), but it’s surprisingly musical with short, clean sources.
 
----
+
 
 ## 🌐 Web UI
 
@@ -84,7 +84,7 @@ python app.py
 - Upload two WAVs (A & B)  
 - Slide **α** to morph, listen, download
 
----
+
 
 ## 🧠 Architecture & DSP details
 
@@ -94,7 +94,7 @@ python app.py
 - **Latent**: default `128` dims  
 - **Reconstruction**: mel → audio via `librosa.feature.inverse.mel_to_audio` (Griffin-Lim, 32 iters)
 
----
+
 
 ## 🛠️ Tips & Tricks
 
@@ -106,7 +106,7 @@ python app.py
   - Use smaller models (e.g., latent 64) and fewer channels  
   - Use the **web UI** from a laptop; Pi just hosts audio I/O or buttons
 
----
+
 
 ## 📈 Roadmap
 
@@ -116,19 +116,7 @@ python app.py
 - [ ] MIDI in → live synth engine  
 - [ ] Lightweight on-device UI (Raspberry Pi + rotary encoder)
 
----
 
-## ⚖️ License & Credits
-
-- MIT License.  
-- Inspired by Google Magenta’s **NSynth** (research project). This repo is an educational re-imagining with a compact architecture.
-
----
-
-## 🙌 Starters’ Checklist
-
-- [ ] Put WAVs in `data/`  
-- [ ] Train → get `ae_best.pt`  
 - [ ] Blend two timbres  
 - [ ] Render a MIDI  
 - [ ] Launch the UI and have fun 🎧
